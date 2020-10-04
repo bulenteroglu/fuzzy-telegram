@@ -1,0 +1,12 @@
+{
+  "name": "fuzzy-telegram",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/bulenteroglu/fuzzy-telegram.git",
+  "author": "Bulent Eroglu <eroglu.bulent98@Gmail.com>",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "private": true
+}
