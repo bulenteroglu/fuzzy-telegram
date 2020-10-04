@@ -1,3 +1,9 @@
-live chat project
+# Live Chat
 
-#typescript
+## Developing
+
+```
+typescript
+react
+tailwindcss
+```
