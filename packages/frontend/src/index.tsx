@@ -1,5 +1,6 @@
 import "./index.css";
 import React from "react";
 import { render } from "react-dom";
+import App from "./App";
 
-render(<div>hi</div>, document.getElementById("root"));
+render(<App />, document.getElementById("root"));

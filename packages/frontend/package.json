@@ -7,6 +7,7 @@
     "start": "parcel ./src/index.html --open"
   },
   "dependencies": {
+    "clsx": "^1.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "tailwindcss": "^1.8.10",
