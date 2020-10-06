@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { gql, useQuery } from "@apollo/client";
 import Composer from "./Composer";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useParams } from "react-router-dom";
 
 dayjs.extend(relativeTime);
 
@@ -25,7 +26,8 @@ function Message({ message }: { message: any }) {
   );
 }
 
-export default function Channel({ id }: { id: string }) {
+export default function Channel() {
+  const { id } = useParams();
   const { data } = useQuery(
     gql`
       query($id: ID!) {
@@ -50,18 +52,31 @@ export default function Channel({ id }: { id: string }) {
       },
     }
   );
-  if (!data) return null;
-  return (
-    <div className='flex-1 flex flex-col'>
-      <div className='flex-1 flex flex-col justify-end divide-y'>
-        {data.channel.messages.map((message: any) => (
-          <Message message={message} />
-        ))}
-      </div>
 
-      <Composer channel={id} />
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (scrollRef.current) {
+      const lastMessage = scrollRef.current.lastElementChild;
+      lastMessage!.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      });
+    }
+  }, [data?.channel.messages]);
+
+  if (!data) return null;
+
+  return (
+    <div className='flex-1 flex flex-col overflow-hidden'>
+      <div className='flex-1 overflow-y-auto'>
+        <div ref={scrollRef} className='flex flex-col justify-end divide-y'>
+          {data.channel.messages.map((message: any) => (
+            <Message key={message.id} message={message} />
+          ))}
+        </div>
+      </div>
+      <Composer channel={data.channel} />
     </div>
   );
 }
-
-// 1:17
